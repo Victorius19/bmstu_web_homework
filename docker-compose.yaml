@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  bmstu_web_homework:
+    container_name: bmstu_web_homework
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 2048M
+    environment:
+      - PORT=3000
+    ports:
+      - 3000:3000

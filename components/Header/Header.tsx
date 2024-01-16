@@ -5,6 +5,7 @@ import { Container, Group, Burger, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './Header.module.css';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const links = [
     { link: '/', label: 'Собеседования' },
@@ -14,7 +15,7 @@ const links = [
 
 const Header = () => {
     const [opened, { toggle }] = useDisclosure(false);
-    const [active, setActive] = useState(links[0].link);
+    const [active, setActive] = useState(usePathname());
 
     const items = links.map((link) => (
         <Link
