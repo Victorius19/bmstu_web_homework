@@ -8,6 +8,7 @@ import {
     Space,
 } from '@mantine/core';
 import Header from '@/components/Header/Header';
+import Providers from './providers';
 
 export const metadata = {
     title: 'My Mantine app',
@@ -25,14 +26,16 @@ export default function RootLayout({
                 <ColorSchemeScript />
             </head>
             <body>
-                <MantineProvider>
-                    <Header />
+                <Providers>
+                    <MantineProvider>
+                        <Header />
 
-                    <Space h='xl' />
-                    <Space h='xl' />
+                        <Space h='xl' />
+                        <Space h='xl' />
 
-                    <Container size='md'>{children}</Container>
-                </MantineProvider>
+                        <Container size='md'>{children}</Container>
+                    </MantineProvider>
+                </Providers>
             </body>
         </html>
     );
