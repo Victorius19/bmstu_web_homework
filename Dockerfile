@@ -45,6 +45,4 @@ ENV PORT 3000
 ENV POSTGRES_HOST "postgres"
 ENV HOSTNAME "0.0.0.0"
 
-RUN yarn migrate
-
 CMD ["node", "server.js"]

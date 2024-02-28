@@ -51,7 +51,7 @@ export function interviewTimeValidation(
         newInterviewStart < interviewer.workStart ||
         newInterviewStart + newInterviewEnd > interviewer.workEnd
     ) {
-        return `Собеседование не укладывается в рабочий день собеседующего. Собеседование должно укладываться в временной промежуток с ${number2time(interviewer.workStart)} до ${number2time(interviewer.workStart)}`;
+        return `Собеседование не укладывается в рабочий день собеседующего. Собеседование должно укладываться в временной промежуток с ${number2time(interviewer.workStart)} до ${number2time(interviewer.workEnd)}`;
     }
 
     // Проверяем, что собеседование не пересекается с другими собеседованиями собеседующего
