@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "lint": "next lint",
-    "db": "docker-compose up -d postgres"
+    "db": "docker-compose up -d postgres",
+    "migrate": "prisma migrate dev"
   },
   "dependencies": {
     "@mantine/charts": "^7.4.1",

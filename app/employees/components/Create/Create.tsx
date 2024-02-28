@@ -1,22 +1,14 @@
 'use client';
 
-import {
-    Button,
-    Center,
-    Checkbox,
-    Group,
-    Modal,
-    MultiSelect,
-    Space,
-    TextInput,
-} from '@mantine/core';
-import { createEmployer } from '../../actions';
+import { Button, Group, Modal, MultiSelect, TextInput } from '@mantine/core';
+import { createEmployer, getEmployers } from '../../actions';
 import { useDisclosure } from '@mantine/hooks';
 import { TimeInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { nameValidation, workTimeValidation } from '../../validation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { time2number } from '@/lib/utils';
+import { getSkills } from '@/app/skills/actions';
 
 type Form = {
     name: string;
@@ -25,16 +17,23 @@ type Form = {
     skills: string[];
 };
 
-const Create = () => {
+const Create = ({
+    skills,
+}: {
+    skills: Awaited<ReturnType<typeof getSkills>>;
+}) => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
         mutationFn: createEmployer,
         onSuccess: (newEmployer) => {
-            queryClient.setQueryData(['employers'], (employers) => [
-                ...employers,
-                newEmployer,
-            ]);
+            queryClient.setQueryData(
+                ['employers'],
+                (employers: Awaited<ReturnType<typeof getEmployers>>) => [
+                    ...employers,
+                    newEmployer,
+                ],
+            );
         },
     });
 
@@ -72,9 +71,15 @@ const Create = () => {
             name: formData.name,
             workStart: time2number(formData.workStart),
             workEnd: time2number(formData.workEnd),
+            skills: formData.skills
+                .map((el) => skills.find((skill) => el === skill.title))
+                .filter((el) => typeof el !== undefined) as Awaited<
+                ReturnType<typeof getSkills>
+            >,
         });
 
         close();
+        form.reset();
     };
 
     return (
@@ -112,7 +117,7 @@ const Create = () => {
                     <MultiSelect
                         label='Введите навыки'
                         placeholder='Введите навык'
-                        data={['React', 'Angular', 'Vue', 'Svelte']}
+                        data={skills.map((el) => el.title)}
                         searchable
                         nothingFoundMessage='Ничего не найдено...'
                         mt='xs'

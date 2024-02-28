@@ -11,8 +11,8 @@ import Header from '@/components/Header/Header';
 import Providers from './providers';
 
 export const metadata = {
-    title: 'My Mantine app',
-    description: 'I have followed setup instructions carefully',
+    title: 'HR сервис',
+    description: 'Какое-то умное мета-описание',
 };
 
 export default function RootLayout({
