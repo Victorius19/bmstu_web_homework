@@ -29,7 +29,7 @@ model Skill {
 model Interview {
   id            Int      @id @default(autoincrement())
   applicant     String
-  interviewer   Employer @relation(fields: [interviewerId], references: [id])
+  interviewer   Employer @relation(fields: [interviewerId], references: [id], onDelete: Cascade)
   interviewerId Int
   start         Int
   duration      Int

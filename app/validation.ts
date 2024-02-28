@@ -40,7 +40,7 @@ export function interviewTimeValidation(
     const interviewer = employers.find((el) => el.name === interviewerName);
 
     const newInterviewStart = time2number(start);
-    const newInterviewEnd = time2number(duration);
+    const newInterviewEnd = time2number(duration) + newInterviewStart;
 
     if (!interviewer) {
         return 'Собеседующего нет в БД';
@@ -49,7 +49,7 @@ export function interviewTimeValidation(
     // Проверяем, что собеседование укладывается в рабочий день интервьюера
     if (
         newInterviewStart < interviewer.workStart ||
-        newInterviewStart + newInterviewEnd > interviewer.workEnd
+        newInterviewEnd > interviewer.workEnd
     ) {
         return `Собеседование не укладывается в рабочий день собеседующего. Собеседование должно укладываться в временной промежуток с ${number2time(interviewer.workStart)} до ${number2time(interviewer.workEnd)}`;
     }
@@ -60,11 +60,11 @@ export function interviewTimeValidation(
         const interviewEnd = el.start + el.duration;
 
         if (
-            (interviewStart >= newInterviewStart &&
+            (interviewStart <= newInterviewStart &&
                 newInterviewStart <= interviewEnd) ||
-            (interviewStart >= newInterviewEnd &&
+            (interviewStart <= newInterviewEnd &&
                 newInterviewEnd <= interviewEnd) ||
-            (interviewStart < newInterviewStart &&
+            (interviewStart > newInterviewStart &&
                 newInterviewEnd > interviewEnd)
         ) {
             return true;
